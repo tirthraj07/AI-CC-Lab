@@ -1,7 +1,7 @@
 /*
 A* Algorithm in C++
 imo this is much easier if done in java
-shiity pointers
+shitty pointers
 */
 
 #include <iostream>
