@@ -1,3 +1,7 @@
+/*
+Assignment 02 : Implement A Star Algorithm for any game search problem
+*/
+
 import java.util.*;
 
 class Node implements Comparable<Node> {
@@ -57,6 +61,7 @@ class AStartAlgorithm {
         openList = new PriorityQueue<>();
         closedList = new HashSet<>();
 
+        // Initialize the Start Node
         startNode.g = 0;
         startNode.h = heuristic(startNode, targetNode);
         startNode.f = startNode.g + startNode.h;
@@ -104,7 +109,7 @@ class AStartAlgorithm {
 
     // Private APIs
     private double heuristic(Node currentNode, Node targetNode){
-        // Using Euclidian Distance
+        // Using Euclidean distance
         int x1 = currentNode.x;
         int x2 = targetNode.x;
         int y1 = currentNode.y;
