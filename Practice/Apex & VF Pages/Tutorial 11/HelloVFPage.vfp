@@ -1,0 +1,23 @@
+<apex:page controller="HelloController">
+    <apex:form>
+    	
+        <apex:pageBlock title="Say Hello">
+			
+            <apex:pageBlockSection>
+                
+                <apex:outputLabel value="Your Name" />
+                <apex:inputText value="{!name}" />
+                
+                <apex:commandButton value="Greet Me!" action="{!sayHello}" rerender="output"/>
+             
+            </apex:pageBlockSection>
+         
+            <apex:pageBlockSection id="output">
+                <apex:outputText value="{!greeting}" />
+            </apex:pageBlockSection>
+        
+        </apex:pageBlock>
+        
+        
+    </apex:form>
+</apex:page>

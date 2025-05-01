@@ -1,0 +1,23 @@
+public class Collections{
+    private List<String> strList = new List<String>();
+    
+    public void addString(String s){
+        strList.add(s);
+    }
+    
+    public void printStrList(){
+        for(String s: strList){
+            System.debug(s);
+        }
+    }
+}
+
+/*
+Collections coll = new Collections();
+coll.addString('Tirthraj');
+coll.addString('Vartak');
+coll.addString('Nags');
+coll.addString('Dongu');
+coll.addString('Mulay');
+coll.printStrList();
+*/

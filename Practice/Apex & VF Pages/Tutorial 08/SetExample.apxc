@@ -1,0 +1,23 @@
+public class SetExample{
+    private Set<String> usernames = new Set<String>();
+    
+    public void isUnique(String name){
+        if(usernames.contains(name)){
+            System.debug('Not Unique');
+            return;
+        }
+        
+        usernames.add(name);
+     	System.debug('Unique');
+    }
+   
+}
+
+
+/*
+Cltr + E and Enter:
+SetExample obj = new SetExample();
+obj.isUnique('Tirthraj');
+obj.isUnique('Tirthraj');
+*/
+

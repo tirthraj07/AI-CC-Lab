@@ -1,0 +1,21 @@
+public class EnumExample {
+	
+    // Enums can only be defined at class level
+    public enum Weekdays { MON, TUE, WED, THUR, FRI, SAT, SUN }
+
+    public EnumExample() {
+        for (Weekdays day : Weekdays.values()) {
+            System.debug('Day: ' + day);
+        }
+    }
+}
+
+
+/*
+    How to run:
+    Ctrl + E and then type
+    new EnumExample();
+
+    Then check `Open Logs` and Press Execute
+    Then click `Debug Only`
+*/

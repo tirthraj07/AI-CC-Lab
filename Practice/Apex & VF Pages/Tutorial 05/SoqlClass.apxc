@@ -1,0 +1,14 @@
+public class SoqlClass{
+    public SoqlClass(){
+        List<Account> accounts = [SELECT Id, Name FROM Account LIMIT 10];
+        for(Account acc : accounts){
+            System.debug(acc);
+        }
+    }    
+}
+
+
+// How to run
+// Press Ctrl + E and enter
+// new SoqlClass();
+// check Open Logs and Press Execute

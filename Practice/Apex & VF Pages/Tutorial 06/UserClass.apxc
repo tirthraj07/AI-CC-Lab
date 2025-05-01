@@ -1,0 +1,49 @@
+// Tutorial on how to use Map in APEX programming
+
+public class UserClass{
+    private Map<String, Account> idToAccount = new Map<String, Account>();
+   	private Map<String, String> idToPassword = new Map<String, String>();
+    
+    public void addNewUser(String userId, String password, String name, String phoneNo){
+        if(idToPassword.containsKey(userId)){
+            System.debug('User already exists.');
+            return;
+        }
+        
+        Account acc = new Account();
+        acc.Name = name;
+        acc.Phone = phoneNo;
+       	idToAccount.put(userId, acc);
+        idToPassword.put(userId, password);
+        
+    	System.debug('User created successfully');
+    }
+    
+    public void getUserDetails(String userId, String password){
+        if(!idToPassword.containsKey(userId)){
+            System.debug('User does not exist');
+            return;
+        }
+    	String userPassword = idToPassword.get(userId);
+        if(userPassword.equals(password)){
+            Account userAccount = idToAccount.get(userId);
+            System.debug('Account Info: ' + userAccount);
+            return;
+        }
+        else{
+            System.debug('Incorrect password');
+        }
+    }
+}
+
+/*
+How to run : Ctlr + E and enter the following
+
+UserClass obj = new UserClass();
+
+obj.addNewUser('1','abc123','tirthraj','+91 11100');    // Creates a new user
+obj.getUserDetails('1','abc123');                       // Returns the correct details
+
+obj.getUserDetails('2','abc123');                       // User does not exist
+obj.addNewUser('1','xyz123','tjm','+91 11122');         // user already exists
+*/

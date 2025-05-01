@@ -1,0 +1,8 @@
+public class HelloController {
+    public String name {get; set;}
+    public String greeting {get; set;}
+    
+    public void sayHello(){
+        greeting = 'Hello ' + name + '!';
+    }
+}

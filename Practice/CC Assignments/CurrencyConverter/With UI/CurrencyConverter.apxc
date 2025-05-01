@@ -1,0 +1,33 @@
+public class CurrencyConverter {
+    public Decimal amount { get; set; }
+    public String fromCurrency { get; set; }
+    public String toCurrency { get; set; }
+    public Decimal convertedAmount { get; set; }
+    public Boolean showResult { get; set; }
+
+    // Let the currency base be USD
+    public Map<String, Decimal> conversionRates = new Map<String, Decimal>{
+        'USD' => 1.0,         
+        'INR' => 0.012,
+        'Pound' => 1.33,
+        'Euro' => 1.13,
+        'Yen' => 0.0069
+    };
+        
+    public List<SelectOption> getCurrencyOptions() {
+        List<SelectOption> options = new List<SelectOption>();
+        for (String key : conversionRates.keySet()) {
+            options.add(new SelectOption(key, key));
+        }
+        return options;
+    }
+
+    public void convertCurrency(){
+        showResult = false;
+        if (conversionRates.containsKey(fromCurrency) && conversionRates.containsKey(toCurrency)) {
+            Decimal amountInUSD = amount * conversionRates.get(fromCurrency);
+            convertedAmount = amountInUSD / conversionRates.get(toCurrency);
+            showResult = true;
+        }
+    }
+}

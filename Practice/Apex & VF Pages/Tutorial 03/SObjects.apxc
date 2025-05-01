@@ -1,0 +1,18 @@
+public class SObjects {
+    private Account acc;
+    public SObjects(){
+        acc = new Account();
+        acc.Name = 'Tirthraj';
+        acc.Phone = '+91 1110001110';
+        acc.Website = 'https://www.github.com/tirthraj07';
+    }
+    
+    public void printAccount(){
+        System.debug(acc);
+    }   
+}
+
+// An sObject is a generic data type in Apex that represents a single row in a Salesforce database table (object).
+// Account ➝ Standard sObject for business accounts
+// Contact ➝ Standard sObject for people
+// Custom_Object__c ➝ Custom sObject (notice the __c suffix)

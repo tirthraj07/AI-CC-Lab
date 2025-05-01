@@ -1,0 +1,21 @@
+public class MyFirstApexProgram {
+    // constructor
+    public MyFirstApexProgram(){
+        System.debug('This is a constructor');
+    }
+}
+
+
+/*
+    How to execute
+    Open Debug -> Open Execute Anonymous Window OR (Ctrl + E)
+    Write:
+    MyFirstApexProgram obj = new MyFirstApexProgram();
+    
+    Check the box : 'Open Logs' and click Execute
+    Then after execution, it should open the logs.
+    Click `debug only` for only debug logs
+
+    You should see:  
+    'This is a constructor'
+*/

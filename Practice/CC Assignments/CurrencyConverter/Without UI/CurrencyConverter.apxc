@@ -1,0 +1,22 @@
+public class CurrencyConverter {
+    // Let the currency base be USD
+    public Map<String, Decimal> conversionRates = new Map<String, Decimal>{
+        'USD' => 1.0,         // base currency
+        'INR' => 0.012,
+        'Pound' => 1.33,
+        'Euro' => 1.13,
+        'Yen' => 0.0069
+    };
+
+    public Decimal convertCurrency(String fromCurrency, String toCurrency, Decimal amount){
+        if (!conversionRates.containsKey(fromCurrency) || !conversionRates.containsKey(toCurrency)) {
+            System.debug('Currency not supported');
+            return -1;
+        }
+        
+        Decimal amountInUSD = amount * conversionRates.get(fromCurrency);
+        Decimal convertedAmount = amountInUSD / conversionRates.get(toCurrency);
+        return convertedAmount.setScale(3);
+    }
+    
+}
