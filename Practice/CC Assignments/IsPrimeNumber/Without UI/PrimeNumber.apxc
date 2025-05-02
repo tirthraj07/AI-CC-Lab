@@ -1,0 +1,50 @@
+public class PrimeNumber {
+    public static Boolean isPrime(Integer num){
+        if(num <= 1){
+            return false;
+        }
+        if(num <= 3){
+            return true;
+        }
+        if((Math.mod(num,2) == 0)|| (Math.mod(num,3) == 0)){
+            return false;
+        }
+        
+        Integer i = 5;
+        while(i*i <= num){
+            if((Math.mod(num, i) == 0)|| (Math.mod(num,(i+2)) == 0)){
+                return false;
+            }
+           	i += 6;
+        }
+        return true;
+    }
+    
+    public void printIsPrime(Integer num){
+        if(PrimeNumber.isPrime(num)){
+            System.debug('Num ' + num + ' is Prime');
+        }
+        else{
+            System.debug('Num ' + num + ' is NOT Prime');
+        }
+    }   
+}
+
+/*
+How to run:
+
+Press Ctrl + E and Enter the following
+
+PrimeNumberController obj = new PrimeNumberController();
+obj.printIsPrime(1);
+obj.printIsPrime(2);
+obj.printIsPrime(5);
+obj.printIsPrime(7);
+obj.printIsPrime(9);
+obj.printIsPrime(10);
+
+Check the `Open Logs` box and Click on Execute
+
+Then click on `Debug Only`
+
+*/

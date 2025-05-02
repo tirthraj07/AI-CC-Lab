@@ -1,0 +1,21 @@
+<apex:page controller="PrimeNumberController">
+	<apex:form>
+    	<apex:pageBlock title="Prime or Not Prime Calculator">
+        	<apex:pageBlockSection columns="2">
+                <apex:outputLabel value="Enter Number" />
+                <apex:inputText value="{!num}" />
+                
+                <apex:outputLabel value="" />
+                <apex:commandButton value="Calculate" action="{!calculateResult}" reRender="resultBlock" />
+            </apex:pageBlockSection>
+            
+            <apex:outputPanel id="resultBlock">
+				<apex:outputPanel rendered="{!showResult}">
+                    <apex:outputText value="Result: {!result}" />
+                </apex:outputPanel>
+                
+            </apex:outputPanel>
+            
+        </apex:pageBlock>
+    </apex:form>    
+</apex:page>

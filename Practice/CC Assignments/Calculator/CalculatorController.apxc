@@ -1,0 +1,51 @@
+public class CalculatorController {
+    public Double operand1 {get; set;}
+    public Double operand2 {get; set;}
+    public Double result {get; private set;}
+    
+    public void addOperands(){
+        result = operand1 + operand2;
+    }
+    
+    public void subOperands(){
+        result = operand1 - operand2;
+    }
+    
+    public void mulOperands(){
+        result = operand1 * operand2;
+    }
+    
+    public void divideOperands(){
+        if(operand2 != 0){
+            result = operand1 / operand2;
+        }       	
+    }
+    
+    public void absOperand1(){
+        result = Math.abs(operand1);
+    }
+    
+    public void absOperand2(){
+        result = Math.abs(operand2);
+    }
+    
+    public void maxOperands(){
+        result = Math.max(operand1, operand2);
+    }
+	
+    public void minOperands(){
+        result = Math.min(operand1, operand2);
+    }    
+    
+    public void powOperands(){
+        result = Math.pow(operand1, operand2);
+    }
+    
+    public void sqrtOperand1(){
+        result = Math.sqrt(operand1);
+    }
+
+    public void sqrtOperand2(){
+        result = Math.sqrt(operand2);
+    }   
+}

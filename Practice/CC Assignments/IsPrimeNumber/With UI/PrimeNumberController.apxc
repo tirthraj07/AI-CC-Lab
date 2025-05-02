@@ -1,0 +1,40 @@
+public class PrimeNumberController {
+    public Integer num {get; set;}
+    public Boolean showResult {get; private set;}
+    public String result {get; private set;}
+        
+    private Boolean isPrime(){
+        if(num <= 1){
+            return false;
+        }
+        if(num <= 3){
+            return true;
+        }
+        if((Math.mod(num,2) == 0)|| (Math.mod(num,3) == 0)){
+            return false;
+        }
+        
+        Integer i = 5;
+        while(i*i <= num){
+            if((Math.mod(num, i) == 0)|| (Math.mod(num,(i+2)) == 0)){
+                return false;
+            }
+           	i += 6;
+        }
+        return true;
+    }
+   
+    public void calculateResult(){
+        try{
+            if(isPrime()){
+                result = 'Number ' + num + ' is Prime!';
+            }else {
+                result = 'Number ' + num + ' is NOT Prime';
+            }
+            showResult = true;
+        }catch(Exception e){
+            showResult = false;
+            result = 'Exception occurred while calculating';
+        }
+    }
+}

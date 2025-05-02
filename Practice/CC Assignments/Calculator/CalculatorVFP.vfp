@@ -1,0 +1,32 @@
+<apex:page controller="CalculatorController">   
+	<apex:form>
+    	<apex:pageBlock title="Calculator">
+        	<apex:pageBlockSection columns="2">
+                <apex:outputLabel value="Operand1" />
+                <apex:inputText value="{!operand1}" />
+                
+                <apex:outputLabel value="Operand2" />
+                <apex:inputText value="{!operand2}" />
+            </apex:pageBlockSection>
+            
+            <apex:pageBlockButtons>
+                <apex:commandButton value="ADD" action="{!addOperands}" reRender="resultBlock" />
+                <apex:commandButton value="SUB" action="{!subOperands}" reRender="resultBlock" />
+                <apex:commandButton value="MUL" action="{!mulOperands}" reRender="resultBlock" />
+                <apex:commandButton value="DIV" action="{!divideOperands}" reRender="resultBlock" />
+                <apex:commandButton value="ABS(1)" action="{!absOperand1}" reRender="resultBlock" />
+                <apex:commandButton value="ABS(2)" action="{!absOperand2}" reRender="resultBlock" />
+                <apex:commandButton value="MAX" action="{!maxOperands}" reRender="resultBlock" />
+                <apex:commandButton value="MIN" action="{!minOperands}" reRender="resultBlock" />
+                <apex:commandButton value="POW" action="{!powOperands}" reRender="resultBlock" />
+                <apex:commandButton value="SQRT(1)" action="{!sqrtOperand1}" reRender="resultBlock" />
+                <apex:commandButton value="SQRT(2)" action="{!sqrtOperand2}" reRender="resultBlock" />
+            </apex:pageBlockButtons>
+        	
+            <apex:outputPanel id="resultBlock">
+                <apex:outputLabel value="Result {!result}" />
+            </apex:outputPanel>
+        
+        </apex:pageBlock>
+    </apex:form>
+</apex:page>
