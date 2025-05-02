@@ -1,0 +1,30 @@
+<apex:page controller="TemperatureConverterController">
+    <apex:form>
+        <apex:pageBlock title="Temperature Converter">
+        	<apex:pageBlockSection columns="2">
+            	
+                <apex:outputLabel value="Input" />
+                <apex:inputText value="{!operand}" />
+                
+                <apex:outputLabel value="Input Temperature Type: " />
+                <apex:selectList value="{!operandType}">
+                    <apex:selectOptions value="{!tempOptions}" />
+                </apex:selectList>
+                
+                <apex:outputLabel value="Output Temperature Type: " />
+                	<apex:selectList value="{!resultType}">
+                    <apex:selectOptions value="{!tempOptions}" />
+                </apex:selectList>
+                
+                <apex:commandButton value="Convert" action="{!convert}" reRender="outputBlock" />
+        	
+            </apex:pageBlockSection>
+            
+
+            <apex:outputPanel id="outputBlock">
+                <apex:outputText value="Result {!result}" />
+            </apex:outputPanel>
+        
+        </apex:pageBlock>
+    </apex:form>
+</apex:page>

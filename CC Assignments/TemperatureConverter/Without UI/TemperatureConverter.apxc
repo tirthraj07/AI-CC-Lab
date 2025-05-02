@@ -1,0 +1,41 @@
+public class TemperatureConverter {
+    public Map<String, List<Double>> temperatureMap { get; set; }
+    public Double operand {get; set;}
+    public Double result {get; set;}
+    public String operandType {get; set;}
+    public String resultType {get; set;} 
+    
+    public TemperatureConverter() {
+        temperatureMap = new Map<String, List<Double>>();
+        temperatureMap.put('Celsius', new List<Double>{0.0, 100.0});
+        temperatureMap.put('Fahrenheit', new List<Double>{32.0, 212.0});
+        temperatureMap.put('Kelvin', new List<Double>{273.15, 373.15});
+    }
+    
+    public void convert(){
+        if(temperatureMap.containsKey(operandType) && temperatureMap.containsKey(resultType) && operand != null){
+            Double operandLow = temperatureMap.get(operandType).get(0);
+            Double operandHigh = temperatureMap.get(operandType).get(1);
+            Double resultLow = temperatureMap.get(resultType).get(0);
+            Double resultHigh = temperatureMap.get(resultType).get(1);
+            result = ((operand-operandLow)/(operandHigh-operandLow))*(resultHigh - resultLow) + resultLow;
+        }
+    }   
+}
+
+/*
+How to run: Press Ctrl + E and Type:
+TemperatureConverterController obj = new TemperatureConverterController();
+obj.operand = 30;
+obj.operandType = 'Celsius';
+obj.resultType = 'Fahrenheit';
+obj.convert();
+System.debug(obj.result);
+
+Check the 'Open Logs' and Press Execute
+
+Then click on 'Debug Only'
+
+You'll see : 
+86.0
+*/

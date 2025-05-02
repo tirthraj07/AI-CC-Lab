@@ -1,0 +1,32 @@
+public class TemperatureConverterController {
+    public Map<String, List<Double>> temperatureMap { get; set; }
+    public Double operand {get; set;}
+    public Double result {get; set;}
+    public String operandType {get; set;}
+    public String resultType {get; set;} 
+    
+    public TemperatureConverterController() {
+        temperatureMap = new Map<String, List<Double>>();
+        temperatureMap.put('Celsius', new List<Double>{0.0, 100.0});
+        temperatureMap.put('Fahrenheit', new List<Double>{32.0, 212.0});
+        temperatureMap.put('Kelvin', new List<Double>{273.15, 373.15});
+    }
+    
+    public List<SelectOption> getTempOptions(){
+        List<SelectOption> options = new List<SelectOption>();
+        for(String tempType: temperatureMap.keySet()){
+            options.add(new SelectOption(tempType, tempType));
+        }
+        return options;
+    }
+
+    public void convert(){
+        if(temperatureMap.containsKey(operandType) && temperatureMap.containsKey(resultType) && operand != null){
+            Double operandLow = temperatureMap.get(operandType).get(0);
+            Double operandHigh = temperatureMap.get(operandType).get(1);
+            Double resultLow = temperatureMap.get(resultType).get(0);
+            Double resultHigh = temperatureMap.get(resultType).get(1);
+            result = ((operand-operandLow)/(operandHigh-operandLow))*(resultHigh - resultLow) + resultLow;
+        }
+    }   
+}
