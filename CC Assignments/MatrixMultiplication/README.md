@@ -82,8 +82,3 @@ obj.printSolution();
 
 ### Output
 ![](output3.png)
-
-
-Solution:
-
-![](https://cdn.teachoo.com/da179547-a3a4-45f8-892c-6cd3448cb029/52.jpg)
