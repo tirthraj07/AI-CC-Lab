@@ -1,0 +1,52 @@
+public class MatrixMultiplication{
+    public Integer M {get; set;}
+    public Integer N {get; set;}
+    public Integer P {get; set;}
+    List<List<Integer>> matrixA {get; set;}
+    List<List<Integer>> matrixB {get; set;}
+    
+    public List<List<Integer>> sol = new List<List<Integer>>();
+    
+    public MatrixMultiplication(List<List<Integer>> matrixA, List<List<Integer>> matrixB){
+        this.matrixA = matrixA;
+        this.matrixB = matrixB;
+        M = matrixA.size();
+        N = matrixA.get(0).size();
+        if(matrixB.size() != N){
+            System.debug('Cannot multiply matrices');
+        	return;
+        }
+        P = matrixB.get(0).size();
+        
+        for(Integer i=0; i<M; i++){
+        	List<Integer> row = new List<Integer>();
+            for(Integer j=0; j<P; j++){
+                row.add(0);
+            }
+            sol.add(row);
+        }
+		
+    }
+    
+    public void mulitply(){
+        for(Integer i=0; i<M; i++){
+            for(Integer j=0; j<P; j++){
+                for(Integer k=0; k<N; k++){
+                    sol[i][j] += matrixA[i][k] * matrixB[k][j];
+                }
+            }
+        }
+    }
+    
+    public void printSolution(){
+        String s = '\n';
+        for(Integer i=0; i<M; i++){
+            for(Integer j=0; j<P; j++){
+                s += sol.get(i).get(j) + ' ';
+            }
+            s += '\n';
+        }
+        System.debug(s);
+    }
+    
+}
