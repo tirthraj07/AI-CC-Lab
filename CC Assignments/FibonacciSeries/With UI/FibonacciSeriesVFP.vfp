@@ -1,0 +1,17 @@
+<apex:page controller="FibonacciSeriesController">
+    <apex:form >
+    	<apex:pageBlock title="Fibonacci Series">
+        	<apex:pageBlockSection columns="2">
+                <apex:outputLabel value="Number of Fibonacci Elements:  " />
+                <apex:inputText value="{!targetCount}" />
+                <apex:outputLabel value="" />
+                <apex:commandButton value="Generate Fibonacci" action="{!solve}" reRender="outputBlock" />
+            </apex:pageBlockSection>
+            <apex:pageBlockSection columns="2" id="outputBlock">
+        		<apex:pageBlockTable value="{!fibonacciSeries}" var="num" >
+					<apex:column value="{!num}" />                
+                </apex:pageBlockTable>
+        	</apex:pageBlockSection>
+        </apex:pageBlock>        
+    </apex:form>
+</apex:page>

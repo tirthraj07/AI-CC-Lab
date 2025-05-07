@@ -1,6 +1,5 @@
 import java.util.ArrayList;
 
-@SuppressWarnings("unused")
 class Solution{
     private final ArrayList<ArrayList<String>> solutions = new ArrayList<>();
     private int N;

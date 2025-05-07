@@ -1,35 +1,32 @@
-/*
-Assignment 02 : Implement A Star Algorithm for any game search problem
-*/
-
 import java.util.*;
 
-class Node implements Comparable<Node> {
+class Node implements Comparable<Node>{
+    public int x;
+    public int y;
+    public double g;
+    public double h;
+    public double f;
+    public Node parent;
 
-    public int x,y;
-    public double f, g, h;
-    public Node parent;         // To Retrace the path
-
-    public Node (int x, int y){
+    public Node(int x, int y){
         this.x = x;
         this.y = y;
-        this.g = Double.MAX_VALUE;
-        this.h = 0;
-        this.f = Double.MAX_VALUE;
-        this.parent = null;
+        g = Double.MAX_VALUE;
+        h = 0;
+        f = g + h;
+        parent = null;
     }
+
+    public void setGAndH(double g, double h){
+        this.g = g;
+        this.h = h;
+        f = g+h;
+    }
+
 
     @Override
     public int compareTo(Node other){
         return Double.compare(this.f, other.f);
-    }
-
-    @Override
-    public boolean equals(Object obj){
-        if (obj instanceof Node other) {
-            return this.x == other.x && this.y == other.y;
-        }
-        return false;
     }
 
     @Override
@@ -38,127 +35,141 @@ class Node implements Comparable<Node> {
     }
 
     @Override
-    public String toString() {
-        return "(" + x + "," + y + ")";
+    public boolean equals(Object obj){
+        if(obj instanceof Node){
+            Node other = (Node) obj;
+            return this.x == other.x && this.y == other.y;
+        }
+        return false;
     }
 
+    @Override
+    public String toString(){
+        return "(" + x + "," + y + ")";
+    }
 }
 
-class AStartAlgorithm {
-    // Data Members
-    private int ROW_MAX,COLUMN_MAX;
-    private PriorityQueue<Node> openList;
-    private HashSet<Node> closedList;
-    private int[] dx = new int[]{1, -1, 0, 0};
-    private int[] dy = new int[]{0, 0, -1, 1};
-    private int[][] arr;
+class AStarAlgorithm {
+    private int ROW_MAX;
+    private int COL_MAX;
+    private int[] dx = {0,0,1,-1};
+    private int[] dy = {1,-1,0,0};
+    private int[][] maze;
 
-    // Public APIs
-    public AStartAlgorithm(int[][] arr, Node startNode, Node targetNode){
-        this.arr = arr;
-        ROW_MAX = arr.length;
-        COLUMN_MAX = arr[0].length;
-        openList = new PriorityQueue<>();
-        closedList = new HashSet<>();
+    public AStarAlgorithm(int[][] maze, Node start, Node target) throws RuntimeException{
+        this.maze = maze;
+        this.ROW_MAX = maze.length;
+        this.COL_MAX = maze[0].length;
 
-        // Initialize the Start Node
-        startNode.g = 0;
-        startNode.h = heuristic(startNode, targetNode);
-        startNode.f = startNode.g + startNode.h;
-        
-        openList.offer(startNode);
+        if(!isValidNode(start) || !isValidNode(target)){
+            throw new RuntimeException("Start or Target supplied to A* are not valid");
+        }
+
+        start.setGAndH(0, heuristic(start, target));
+
+        PriorityQueue<Node> openList = new PriorityQueue<>();
+        HashSet<Node> closedList = new HashSet<>();
+        openList.offer(start);
 
         while(!openList.isEmpty()){
-            Node currentNode = openList.poll();
-            
-            if(currentNode.equals(targetNode)){
-                handleTargetNodeFound(currentNode);
+            Node node = openList.poll();
+            if(closedList.contains(node)) continue; // If we had already evaludated this node. no need to evaluate this branch again
+            closedList.add(node);
+
+            if(node.equals(target)){
+                handleTargetFound(node);
                 return;
             }
 
-            closedList.add(currentNode);
+            ArrayList<Node> neighbourNodes = getNeighbours(node);
 
-            for(int i=0; i<4; i++){
-                
-                int nx = currentNode.x + dx[i];
-                int ny = currentNode.y + dy[i];
-
-                if(!isValidCoordinate(nx, ny)) continue;
-
-                Node neighbour = new Node(nx, ny);
-                neighbour.g = currentNode.g + 1;
-                neighbour.h = heuristic(neighbour, targetNode);
-                neighbour.f = neighbour.g + neighbour.h;
-                neighbour.parent = currentNode;
-                
+            for(Node neighbour : neighbourNodes){
                 if(closedList.contains(neighbour)) continue;
+                neighbour.setGAndH(node.g + 1, heuristic(neighbour, target));
 
-                Node exisitingNeighbourInOpenList = openList.stream().filter(n -> n.equals(neighbour)).findFirst().orElse(null);
-                
-                if(exisitingNeighbourInOpenList != null){
-                    if(exisitingNeighbourInOpenList.g <= neighbour.g) continue;
-                    openList.remove(exisitingNeighbourInOpenList);
+                Node neighbourNodeInOpenList = openList.stream().filter(n -> n.equals(neighbour)).findFirst().orElse(null);
+                if(neighbourNodeInOpenList != null){
+                    if(neighbourNodeInOpenList.compareTo(neighbour) <= 0) continue;
+                    // openList.remove(neighbourNodeInOpenList);    // This would take O(n) so instead, will keep it as it is and instead check if we had evaulated the node before to avoid recomputations   
                 }
                 openList.add(neighbour);
             }
+
         }
 
-        System.out.println("No Path Found");
+        System.out.println("Node not reachable");
+
+    }   
+
+
+    private ArrayList<Node> getNeighbours(Node node) {
+        ArrayList<Node> neighbours = new ArrayList<>();
+        
+        for(int i=0; i<4; i++){
+            int nx = node.x + dx[i];
+            int ny = node.y + dy[i];
+            if(!isValidCoordinate(nx, ny)) continue;
+            Node neighbour = new Node(nx, ny);
+            neighbour.parent = node;
+            neighbours.add(neighbour);
+        }
+
+        return neighbours;
     }
 
 
-    // Private APIs
-    private double heuristic(Node currentNode, Node targetNode){
-        // Using Euclidean distance
-        int x1 = currentNode.x;
-        int x2 = targetNode.x;
-        int y1 = currentNode.y;
-        int y2 = targetNode.y;
-        return Math.abs(x1-x2) + Math.abs(y1-y2);
-    }
-
-    private void handleTargetNodeFound(Node node){
-        System.out.println("Target Node Found!");
-        List<Node> path = new LinkedList<>();
+    private void handleTargetFound(Node node) {
+        ArrayList<Node> path = new ArrayList<>();
         while(node != null){
             path.add(node);
             node = node.parent;
         }
         Collections.reverse(path);
-        System.out.println("Printing the Path..");
-        for(int i=0; i<path.size(); i++){
+
+        System.out.println("Target node found! Tracing the path..");
+        for (int i = 0; i < path.size(); i++) {
             System.out.print(path.get(i));
-            if(i != path.size() - 1) System.out.print(" -> ");
+            if (i == path.size() - 1)
+                System.out.println();
+            else
+                System.out.print(" -> ");
         }
-        System.out.println("\n== END ==");
+        System.out.println("=== END ===");
     }
 
+
     private boolean isValidCoordinate(int x, int y){
-        return x >= 0 && y >= 0 && x < ROW_MAX && y < COLUMN_MAX && arr[x][y] == 0;
+        return x >= 0 && y >= 0 && x < ROW_MAX && y < COL_MAX && maze[x][y] != 1;
+    }
+    private boolean isValidNode(Node n){
+        return n != null && isValidCoordinate(n.x, n.y);
+    }
+    private double heuristic(Node node, Node target) throws RuntimeException{
+        if(node == null || target == null){
+            throw new RuntimeException("Either Node or Target supplied to heuristic function is null");
+        }
+        int x1 = node.x;
+        int y1 = node.y;
+        int x2 = target.x;
+        int y2 = target.y;
+        return Math.abs(x1-x2) + Math.abs(y1-y2);
     }
 
 }
 
 
-public class Main{
+public class Main {
     public static void main(String[] args){
-        
-        int[][] arr = new int[][]{
+        int[][] maze = new int[][]{
             {0,1,0,0,0},
             {0,1,0,1,0},
-            {0,0,0,1,0},
+            {0,1,0,0,0},
             {0,1,0,1,0},
-            {0,1,0,0,0}
+            {0,0,0,1,0}
         };
 
-        Node startNode = new Node(0, 0);
-        Node targetNode = new Node(4,4);
-        new AStartAlgorithm(arr, startNode, targetNode);
-        /*
-            Target Node Found!
-            Printing the Path..
-            (0,0) -> (1,0) -> (2,0) -> (2,1) -> (2,2) -> (3,2) -> (4,2) -> (4,3) -> (4,4)
-            == END ==
-        */
+        Node start = new Node(0, 0);
+        Node target = new Node(4, 4);
+        new AStarAlgorithm(maze, start, target);
     }
 }

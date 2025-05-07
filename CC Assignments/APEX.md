@@ -6,6 +6,7 @@ Problem Statements for APEX Programming
 - Currency Conversion
 - Matrix Addition
 - Matrix Multiplication
+- Fibonacci Series
 - Add all elements in a given array
 - Electricity Bill Calculator
 

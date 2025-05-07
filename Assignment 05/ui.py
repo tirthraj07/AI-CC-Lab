@@ -20,7 +20,7 @@ btn.place(relx=1.0, rely=1.0, anchor='se')
 user_input = tk.Entry(root, width=50)
 user_input.place(relx=0.0, rely=0.95, anchor='sw')
 
-chat_window = scrolledtext.ScrolledText(root, width=100)
+chat_window = scrolledtext.ScrolledText(root, width=60, wrap="word")
 chat_window.place(relx=0.0, rely=0.0, anchor='nw')
 chat_window.insert(tk.END, 'Brew Buddy >> Hello, I\'m BrewBuddy. How can I help you today?\n\n')
 
