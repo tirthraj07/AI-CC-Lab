@@ -1,0 +1,30 @@
+<apex:page controller="StudentController">
+    <h2>Student Management</h2>
+
+    <apex:form>
+        <apex:pageMessages />
+        
+        <h3>Add/Edit Student</h3>
+        <apex:inputField value="{!student.Name}" label="Name" />
+        <apex:inputField value="{!student.Age__c}" label="Age" />
+        <apex:inputField value="{!student.Grade__c}" label="Grade" />
+        <apex:commandButton value="Save" action="{!saveStudent}" />
+    </apex:form>
+
+    <h3>Student List</h3>
+    <apex:form id="studentList">
+        <apex:pageBlock>
+            <apex:pageBlockTable value="{!students}" var="stud">
+                <apex:column value="{!stud.Name}" />
+                <apex:column value="{!stud.Age__c}" />
+                <apex:column value="{!stud.Grade__c}" />
+                <apex:column>
+                    <apex:commandButton value="Delete" action="{!deleteStudent}" reRender="studentList">
+                        <apex:param name="studentId" value="{!stud.Id}" assignTo="{!student.Id}" />
+                    </apex:commandButton>
+                </apex:column>
+            </apex:pageBlockTable>
+        </apex:pageBlock>
+    </apex:form>
+</apex:page>
+

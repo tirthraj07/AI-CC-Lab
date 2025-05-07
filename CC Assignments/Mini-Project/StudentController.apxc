@@ -1,0 +1,33 @@
+public with sharing class StudentController {
+    public List<Student__c> students { get; set; }
+    public Student__c student { get; set; }
+
+    public StudentController() {
+        students = [SELECT Id, Name, Age__c, Grade__c FROM Student__c];
+        student = new Student__c();
+    }
+
+    // Create or Update
+    public PageReference saveStudent() {
+        try {
+            upsert student;
+            students = [SELECT Id, Name, Age__c, Grade__c FROM Student__c];
+            student = new Student__c();
+        } catch (Exception e) {
+            ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, e.getMessage()));
+        }
+        return null;
+    }
+
+    // Delete without parameter
+    public PageReference deleteStudent() {
+        try {
+            delete [SELECT Id FROM Student__c WHERE Id = :student.Id];
+            students = [SELECT Id, Name, Age__c, Grade__c FROM Student__c];
+        } catch (Exception e) {
+            ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, e.getMessage()));
+        }
+        return null;
+    }
+}
+
